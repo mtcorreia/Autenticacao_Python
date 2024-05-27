@@ -18,8 +18,8 @@ def menu_usuario_basico(usuario):
             print("EMAIL:", usuario["email"])
             print("CATEGORIA: Usuário Básico")
         elif escolha == "2":
-            nova_senha = input("NOVA SENHA: ")
-            confirmar_nova_senha = getpass("CONFIRMAR NOVA SENHA: ")
+            nova_senha = getpass.getpass("NOVA SENHA: ")
+            confirmar_nova_senha = getpass.getpass("CONFIRMAR NOVA SENHA: ")
             if nova_senha == confirmar_nova_senha:
                 atualizar_senha_json(usuario["email"], nova_senha)
             else:

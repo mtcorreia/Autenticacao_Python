@@ -1,6 +1,7 @@
 import getpass
 import json
 from atualizacao_senha import atualizar_senha_json
+from autenticacao import verificar_hash_senha
 
 def menu_usuario_avancado(usuario):
     print(f"\nSeja bem-vindo, {usuario['nome']}!\n")
@@ -10,7 +11,8 @@ def menu_usuario_avancado(usuario):
         print("1 - LISTAGEM DE USUÁRIOS")
         print("2 - MINHA CONTA")
         print("3 - REDEFINIR SENHA")
-        print("4 - LOGOUT")
+        print("4 - VERIFICAR HASH DE SENHA")
+        print("5 - LOGOUT")
 
         escolha = input("\nEscolha uma opção: ")
 
@@ -30,14 +32,24 @@ def menu_usuario_avancado(usuario):
             print("CATEGORIA: Usuário Avançado")
 
         elif escolha == "3":
-            nova_senha = input("NOVA SENHA: ")
-            confirmar_nova_senha = getpass("CONFIRMAR NOVA SENHA: ")
+            nova_senha = getpass.getpass("NOVA SENHA: ")
+            confirmar_nova_senha = getpass.getpass("CONFIRMAR NOVA SENHA: ")
             if nova_senha == confirmar_nova_senha:
                 atualizar_senha_json(usuario["email"], nova_senha)
             else:
                 print("ERRO: As senhas não coincidem. Tente novamente.")
+
         elif escolha == "4":
+            hash_armazenado = input("\nHASH ARMAZENADO: ")
+            senha_fornecida = getpass.getpass("SENHA FORNECIDA: ")
+            if verificar_hash_senha(hash_armazenado, senha_fornecida):
+                print("\nA senha corresponde ao hash fornecido.")
+            else:
+                print("\nA senha não corresponde ao hash fornecido.")
+
+        elif escolha == "5":
             print("Logout realizado.")
             break
+
         else:
             print("ERRO: Opção inválida. Tente novamente.")

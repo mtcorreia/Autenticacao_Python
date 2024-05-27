@@ -1,5 +1,6 @@
 import json
 from getpass import getpass
+import hashlib
 
 def registrar_usuario():
     print("\n=== CADASTRO DE USUÁRIO ===")
@@ -13,11 +14,14 @@ def registrar_usuario():
         print("ERRO: As senhas não coincidem. Tente novamente.")
         return
 
+    # Gerar o hash da senha
+    hash_senha = hashlib.sha256(senha.encode()).hexdigest()
+
     novo_usuario = {
         "nome": nome,
         "email": email,
         "categoria": categoria,
-        "senha": senha
+        "senha": hash_senha
     }
 
     with open("usuarios.json", "a") as file:
